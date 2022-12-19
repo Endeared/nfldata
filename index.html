@@ -17,31 +17,36 @@
     <div id="receptions"></div>
     <div id="touchdowns"></div>
     <div id="receivingYards"></div>
+    <div id="rushYds"></div>
+    <div id="rushTds"></div>
 
 </body>
 
 <script>
 
-    let cityName = document.getElementById('cityName')
-    let teamName = document.getElementById('teamName')
-    let receptionsName = document.getElementById('receptions')
-    let touchdownsName = document.getElementById('touchdowns')
-    let receivingYdsName = document.getElementById('receivingYards')
+    // let cityName = document.getElementById('cityName')
+    // let teamName = document.getElementById('teamName')
+    // let receptionsName = document.getElementById('receptions')
+    // let touchdownsName = document.getElementById('touchdowns')
+    // let receivingYdsName = document.getElementById('receivingYards')
 
-    let teamNameArr = [];
-    let teamArr = [];
-    let receptionArr = [];
-    let touchdownArr = [];
-    let receivingYdsArr = [];
-    let cities = ['Cincinnati Bengals']
+    let rushYdsName = document.getElementById('rushYds')
+    let rushTdsName = document.getElementById('rushTds')
 
-    let searchBar = document.getElementById('search');
-    searchBar.setAttribute("onkeydown", "check(this)");
+    // let teamNameArrPass = [];
+    // let teamArrPass = [];
+    // let receptionArrPass = [];
+    // let touchdownArrPass = [];
+    // let receivingYdsArrPass = [];
+    // let cities = ['Cincinnati Bengals']
+
+    // let searchBar = document.getElementById('search');
+    // searchBar.setAttribute("onkeydown", "check(this)");
 
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    // function sleep(ms) {
+    //     return new Promise(resolve => setTimeout(resolve, ms));
+    // }
 
     const options = {
         method: 'GET',
@@ -51,75 +56,72 @@
         }
     };
 
+    // for (let i = 0; i < 32; i++) {
+    //     fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
+    //         .then(response => response.json())
+    //         .then(response => {
+
+    //             let teamName = response._embedded.teamReceivingStatsList[i].name
+    //             let lowerTeam = teamName.toLowerCase();
+    //             let receptions = response._embedded.teamReceivingStatsList[i].receives
+    //             let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
+    //             let receivingYards = response._embedded.teamReceivingStatsList[i].yards
+
+    //             teamNameArrPass.push(teamName)
+    //             teamArrPass.push(lowerTeam)
+    //             receptionArrPass.push(receptions)
+    //             touchdownArrPass.push(touchdowns)
+    //             receivingYdsArrPass.push(receivingYards)
+
+
+    //         })
+    //         .catch(err => console.error(err));
+    // }
+
+    // function check(ele) {
+    //     if (event.key === 'Enter') {
+    //         let lower = ele.value.toLowerCase();
+    //         console.log(teamArrPass)
+    //         for (let i = 0; i < teamArrPass.length; i++) {
+    //             let currentTeam = teamArrPass[i];
+    //             if (lower === currentTeam) {
+    //                 console.log('Index: ' + i)
+    //                 teamArrPass.indexOf(lower);
+    //                 receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
+    //                 touchdownsName.innerHTML = touchdownArrPass[i] + " touchdowns!";
+    //                 receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
+    //                 for(let i = 0; i < 1; i++) {
+    //                     const search = lower.charAt(0).toUpperCase() + lower.slice(1);
+    //                     let currentName = cities[i];
+    //                     if (currentName.includes(search)) {
+    //                         console.log(currentName)
+    //                         cityName.innerHTML = currentName;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+
     for (let i = 0; i < 32; i++) {
-        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
+        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/1999', options)
             .then(response => response.json())
             .then(response => {
 
-                let teamName = response._embedded.teamReceivingStatsList[i].name
-                let lowerTeam = teamName.toLowerCase();
-                let receptions = response._embedded.teamReceivingStatsList[i].receives
-                let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
-                let receivingYards = response._embedded.teamReceivingStatsList[i].yards
+                let teamName = response._embedded.teamRushingStatsList[i].name
+                let rushYds = response._embedded.teamRushingStatsList[i].yards
+                let touchdowns = response._embedded.teamRushingStatsList[i].touchdowns
+                console.log(teamName + " " + rushYds + " " + touchdowns)
 
-                // console.log(teamName)
-                teamNameArr.push(teamName)
-                teamArr.push(lowerTeam)
-                receptionArr.push(receptions)
-                touchdownArr.push(touchdowns)
-                receivingYdsArr.push(receivingYards)
 
 
             })
             .catch(err => console.error(err));
     }
 
-    function check(ele) {
-        if (event.key === 'Enter') {
-            let lower = ele.value.toLowerCase();
-            console.log(teamArr)
-            for (let i = 0; i < teamArr.length; i++) {
-                let currentTeam = teamArr[i];
-                if (lower === currentTeam) {
-                    console.log('Index: ' + i)
-                    teamArr.indexOf(lower);
-                    console.log(teamNameArr[i])
-                    console.log(receptionArr[i])
-                    console.log(touchdownArr[i])
-                    console.log(receivingYdsArr[i])
-                    receptionsName.innerHTML = receptionArr[i] + " receptions!";
-                    touchdownsName.innerHTML = touchdownArr[i] + " touchdowns!";
-                    receivingYdsName.innerHTML = receivingYdsArr[i] + " receiving yards!";
-                    for(let i = 0; i < 1; i++) {
-                        const search = lower.charAt(0).toUpperCase() + lower.slice(1);
-                        let currentName = cities[i];
-                        if (currentName.includes(search)) {
-                            console.log(currentName)
-                            cityName.innerHTML = currentName;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
 
-
-// fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/2022', options)
-// 	.then(response => response.json())
-// 	.then(response => console.log(response))
-// 	.catch(err => console.error(err));
-
-// let i = 0;
-// for (let i = 0; i < 32; i++) {
-//     fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2019', options)
-//         .then(response => response.json())
-//         .then(response => console.log(response._embedded.teamReceivingStatsList[i].name
-//         + ", receptions: " + response._embedded.teamReceivingStatsList[i].receives + ",  touchdowns: " +
-//         response._embedded.teamReceivingStatsList[i].touchdowns + ",  yards: " +
-//         response._embedded.teamReceivingStatsList[i].yards))
-//         .catch(err => console.error(err));
-// }
 
 
 </script>
