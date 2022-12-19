@@ -112,7 +112,6 @@
             .then(response => response.json())
             .then(response => {
 
-                console.log(response)
                 let teamName = response._embedded.teamWinStatsList[i].name
                 let lowerTeam = teamName.toLowerCase();
                 let wins = response._embedded.teamWinStatsList[i].wins
@@ -160,6 +159,7 @@
                     teamArrRush.indexOf(lower);
                     rushYdsName.innerHTML = rushYdsArrRush[i] + " rushing yards!"
                     rushTdsName.innerHTML = touchdownsArrRush[i] + " rushing touchdowns!"
+                    console.log(teamArrWins)
                 }
             }
             for (let i = 0; i < teamArrWins.length; i++) {
@@ -168,8 +168,7 @@
                     console.log('Index: ' + i)
                     teamArrWins.indexOf(lower);
 
-                    rushYdsName.innerHTML = rushYdsArrRush[i] + " rushing yards!"
-                    rushTdsName.innerHTML = touchdownsArrRush[i] + " rushing touchdowns!"
+                    winLossPct.innerHTML = winArr[i] + " - " + lossArr[i] + " (" + pctArr[i] + ")";
                 }
             }
         }
