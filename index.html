@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input id="search" type="text" placeholder="Search">
+
+    <div id="teamName"></div>
+    <div id="receptions"></div>
+    <div id="touchdowns"></div>
+    <div id="receivingYards"></div>
+
+</body>
+
+<script>
+
+let teamArr = [];
+let receptionArr = [];
+let touchdownArr = [];
+let receivingYdsArr = [];
+
+let searchBar = document.getElementById('search');
+searchBar.setAttribute("onkeydown", "check(this)");
+
+const options = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '15ec37c6e1msh41118b97b21f529p1dd1d0jsn409e2039107c',
+		'X-RapidAPI-Host': 'nfl-team-stats.p.rapidapi.com'
+	}
+};
+
+
+for(let i = 0; i < 32; i++) {
+fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
+    .then(response => response.json())
+    .then(response => {
+
+        var teamName = response._embedded.teamReceivingStatsList[i].name
+        var receptions = response._embedded.teamReceivingStatsList[i].receives
+        var touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
+        var receivingYards = response._embedded.teamReceivingStatsList[i].yards
+
+        teamArr.push(teamName)
+        receptionArr.push(receptions)
+        touchdownArr.push(touchdowns)
+        receivingYdsArr.push(receivingYards)
+
+        console.log(teamName)
+
+    })
+    .catch(err => console.error(err));
+}
+
+// fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/2022', options)
+// 	.then(response => response.json())
+// 	.then(response => console.log(response))
+// 	.catch(err => console.error(err));
+
+// let i = 0;
+// for (let i = 0; i < 32; i++) {
+//     fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2019', options)
+//         .then(response => response.json())
+//         .then(response => console.log(response._embedded.teamReceivingStatsList[i].name
+//         + ", receptions: " + response._embedded.teamReceivingStatsList[i].receives + ",  touchdowns: " +
+//         response._embedded.teamReceivingStatsList[i].touchdowns + ",  yards: " +
+//         response._embedded.teamReceivingStatsList[i].yards))
+//         .catch(err => console.error(err));
+// }
+
+
+console.log(teamName)
+
+
+</script>
+
+</html>
