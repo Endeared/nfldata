@@ -1,0 +1,60 @@
+body {
+    overflow: hidden;
+    font-family: 'Calibri';
+    background-color: rgb(50, 51, 56);
+    color: white;
+}
+
+.searchCont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 900;
+    margin-bottom: 10vh;
+    margin-top: 3vh;
+}
+
+#search {
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.statsCont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statsCont .row1, .statsCont .row2 {
+    margin-bottom: 1vh;
+}
+
+
+.row1, .row2 {
+    display: flex;
+}
+
+.row1 div, .row2 div {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#cityName {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.rowName {
+    margin-bottom: 5vh;
+}
+
+.footerCont {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    position: absolute;
+    bottom: 1%;
+    font-size: 12px;
+}
