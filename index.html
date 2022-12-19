@@ -8,17 +8,106 @@
     <title>Document</title>
 </head>
 
+
+<style>
+    body {
+        overflow: hidden;
+        font-family: 'Calibri';
+        background-color: rgb(50, 51, 56);
+        color: white;
+    }
+
+    .searchCont {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 900;
+        margin-bottom: 10vh;
+        margin-top: 3vh;
+    }
+
+    #search {
+        text-align: center;
+        margin-top: 1vh;
+    }
+
+    .statsCont {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .statsCont .row1, .statsCont .row2 {
+        margin-bottom: 1vh;
+    }
+
+
+    .row1, .row2 {
+        display: flex;
+    }
+
+    .row1 div, .row2 div {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    #cityName {
+        font-size: 24px;
+        font-weight: 900;
+    }
+
+    .rowName {
+        margin-bottom: 5vh;
+    }
+
+    .footerCont {
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 1%;
+        font-size: 12px;
+    }
+
+
+</style>
+
 <body>
 
-    <input id="search" type="text" placeholder="Search by TEAM NAME">
+    <div class="searchCont">
+        <div class="searchTitle">SEARCH HERE</div>
+        <input id="search" type="text" placeholder="Input team">
+    </div>
 
-    <div id="cityName"></div>
-    <div id="receptions"></div>
-    <div id="touchdowns"></div>
-    <div id="receivingYards"></div>
-    <div id="rushYds"></div>
-    <div id="rushTds"></div>
-    <div id="winLossPct"></div>
+    <div class="statsCont">
+        <div class="rowName">
+            <img src="" id="cityPic">
+            <div id="cityName"></div>
+        </div>
+        <div class="row1">
+            <div id="receptions"></div>
+            <div id="receivingYards"></div>
+            <div id="touchdowns"></div>
+        </div>
+        <div class="row2">
+            <div id="rushYds"></div>
+            <div id="rushTds"></div>
+        </div>
+        <div class="rowWL">
+            <div id="winLossPct"></div>
+        </div>
+
+    </div>
+
+    <div class="footerCont">
+        <div class="footer">
+        Website made by Ross Hamey. @Endeared on GitHub.
+        </div>
+    </div>
+
+
 
 </body>
 
@@ -63,89 +152,89 @@
         }
     };
 
-    for (let i = 0; i < 32; i++) {
-        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
-            .then(response => response.json())
-            .then(response => {
+    for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 32; i++) {
+            fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
+                .then(response => response.json())
+                .then(response => {
 
-                let teamName = response._embedded.teamReceivingStatsList[i].name
-                let lowerTeam = teamName.toLowerCase();
-                let receptions = response._embedded.teamReceivingStatsList[i].receives
-                let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
-                let receivingYards = response._embedded.teamReceivingStatsList[i].yards
+                    let teamName = response._embedded.teamReceivingStatsList[i].name
+                    let lowerTeam = teamName.toLowerCase();
+                    let receptions = response._embedded.teamReceivingStatsList[i].receives
+                    let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
+                    let receivingYards = response._embedded.teamReceivingStatsList[i].yards
 
-                teamNameArrPass.push(teamName)
-                teamArrPass.push(lowerTeam)
-                receptionArrPass.push(receptions)
-                touchdownArrPass.push(touchdowns)
-                receivingYdsArrPass.push(receivingYards)
+                    teamNameArrPass.push(teamName)
+                    teamArrPass.push(lowerTeam)
+                    receptionArrPass.push(receptions)
+                    touchdownArrPass.push(touchdowns)
+                    receivingYdsArrPass.push(receivingYards)
 
 
-            })
-            .catch(err => console.error(err));
+                })
+                .catch(err => console.error(err));
+        }
+
+        for (let i = 0; i < 32; i++) {
+            fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/2022', options)
+                .then(response => response.json())
+                .then(response => {
+
+                    let teamName = response._embedded.teamRushingStatsList[i].name
+                    let lowerTeam = teamName.toLowerCase();
+                    let rushYds = response._embedded.teamRushingStatsList[i].yards
+                    let touchdowns = response._embedded.teamRushingStatsList[i].touchdowns
+
+                    teamNameArrRush.push(teamName);
+                    teamArrRush.push(lowerTeam);
+                    rushYdsArrRush.push(rushYds);
+                    touchdownsArrRush.push(touchdowns);
+
+
+
+                })
+                .catch(err => console.error(err));
+        }
+
+        for (let i = 0; i < 32; i++) {
+            fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/win-stats/2022', options)
+                .then(response => response.json())
+                .then(response => {
+
+                    let teamName = response._embedded.teamWinStatsList[i].name
+                    let lowerTeam = teamName.toLowerCase();
+                    let wins = response._embedded.teamWinStatsList[i].wins
+                    let losses = response._embedded.teamWinStatsList[i].losses
+                    let pct = response._embedded.teamWinStatsList[i].winRatePercentage
+
+                    teamNameArrWins.push(teamName);
+                    teamArrWins.push(lowerTeam);
+                    winArr.push(wins);
+                    lossArr.push(losses);
+                    pctArr.push(pct);
+
+
+
+                })
+                .catch(err => console.error(err));
+        }
     }
 
-    for (let i = 0; i < 32; i++) {
-        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/2022', options)
-            .then(response => response.json())
-            .then(response => {
-
-                let teamName = response._embedded.teamRushingStatsList[i].name
-                let lowerTeam = teamName.toLowerCase();
-                let rushYds = response._embedded.teamRushingStatsList[i].yards
-                let touchdowns = response._embedded.teamRushingStatsList[i].touchdowns
-
-                teamNameArrRush.push(teamName);
-                teamArrRush.push(lowerTeam);
-                rushYdsArrRush.push(rushYds);
-                touchdownsArrRush.push(touchdowns);
-
-
-
-            })
-            .catch(err => console.error(err));
-    }
-
-    for (let i = 0; i < 32; i++) {
-        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/win-stats/2022', options)
-            .then(response => response.json())
-            .then(response => {
-
-                let teamName = response._embedded.teamWinStatsList[i].name
-                let lowerTeam = teamName.toLowerCase();
-                let wins = response._embedded.teamWinStatsList[i].wins
-                let losses = response._embedded.teamWinStatsList[i].losses
-                let pct = response._embedded.teamWinStatsList[i].winRatePercentage
-
-                teamNameArrWins.push(teamName);
-                teamArrWins.push(lowerTeam);
-                winArr.push(wins);
-                lossArr.push(losses);
-                pctArr.push(pct);
-
-
-
-            })
-            .catch(err => console.error(err));
-    }
 
     function check(ele) {
         if (event.key === 'Enter') {
             let lower = ele.value.toLowerCase();
-            console.log(teamArrPass)
             for (let i = 0; i < teamArrPass.length; i++) {
                 let currentTeam = teamArrPass[i];
                 if (lower === currentTeam) {
-                    console.log('Index: ' + i)
                     teamArrPass.indexOf(lower);
-                    receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
-                    touchdownsName.innerHTML = touchdownArrPass[i] + " receiving touchdowns!";
-                    receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
-                    for(let i = 0; i < 32; i++) {
+                    receptionsName.innerHTML = receptionArrPass[i] + " rec. ";
+                    touchdownsName.innerHTML = touchdownArrPass[i] + " pass TDs";
+                    receivingYdsName.innerHTML = receivingYdsArrPass[i] + " pass yds";
+                    for (let i = 0; i < 32; i++) {
                         const search = lower.charAt(0).toUpperCase() + lower.slice(1);
                         let currentName = cities[i];
                         if (currentName.includes(search)) {
-                            console.log(currentName)
                             cityName.innerHTML = currentName;
                         }
                     }
@@ -154,21 +243,17 @@
             for (let i = 0; i < teamArrRush.length; i++) {
                 let currentTeam = teamArrRush[i];
                 if (lower === currentTeam) {
-                    console.log('Index: ' + i)
                     teamArrRush.indexOf(lower);
-                    rushYdsName.innerHTML = rushYdsArrRush[i] + " rushing yards!"
-                    rushTdsName.innerHTML = touchdownsArrRush[i] + " rushing touchdowns!"
-                    console.log(teamArrWins)
+                    rushYdsName.innerHTML = rushYdsArrRush[i] + " rush yds"
+                    rushTdsName.innerHTML = touchdownsArrRush[i] + " rush TDs"
                 }
             }
             for (let i = 0; i < teamArrWins.length; i++) {
                 let currentTeam = teamArrWins[i];
-                console.log(currentTeam)
                 if (currentTeam.includes(lower)) {
-                    console.log('Index: ' + i)
                     teamArrWins.indexOf(lower);
 
-                    winLossPct.innerHTML = winArr[i] + " - " + lossArr[i] + " [" + pctArr[i] + "]";
+                    winLossPct.innerHTML = winArr[i] + "W - " + lossArr[i] + "L [" + pctArr[i] + "]";
                 }
             }
         }
