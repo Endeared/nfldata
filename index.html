@@ -39,14 +39,14 @@
     // let touchdownArrPass = [];
     // let receivingYdsArrPass = [];
     // let cities = ['Cincinnati Bengals']
+    let teamArrRush = [];
+    let teamNameArrRush = [];
+    let rushYdsArrRush = [];
+    let touchdownsArrRush = [];
 
     // let searchBar = document.getElementById('search');
     // searchBar.setAttribute("onkeydown", "check(this)");
 
-
-    // function sleep(ms) {
-    //     return new Promise(resolve => setTimeout(resolve, ms));
-    // }
 
     const options = {
         method: 'GET',
@@ -78,30 +78,48 @@
     //         .catch(err => console.error(err));
     // }
 
-    // function check(ele) {
-    //     if (event.key === 'Enter') {
-    //         let lower = ele.value.toLowerCase();
-    //         console.log(teamArrPass)
-    //         for (let i = 0; i < teamArrPass.length; i++) {
-    //             let currentTeam = teamArrPass[i];
-    //             if (lower === currentTeam) {
-    //                 console.log('Index: ' + i)
-    //                 teamArrPass.indexOf(lower);
-    //                 receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
-    //                 touchdownsName.innerHTML = touchdownArrPass[i] + " touchdowns!";
-    //                 receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
-    //                 for(let i = 0; i < 1; i++) {
-    //                     const search = lower.charAt(0).toUpperCase() + lower.slice(1);
-    //                     let currentName = cities[i];
-    //                     if (currentName.includes(search)) {
-    //                         console.log(currentName)
-    //                         cityName.innerHTML = currentName;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    function check(ele) {
+        if (event.key === 'Enter') {
+            let lower = ele.value.toLowerCase();
+            console.log(teamArrPass)
+            for (let i = 0; i < teamArrPass.length; i++) {
+                let currentTeam = teamArrPass[i];
+                if (lower === currentTeam) {
+                    console.log('Index: ' + i)
+                    teamArrPass.indexOf(lower);
+                    receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
+                    touchdownsName.innerHTML = touchdownArrPass[i] + " touchdowns!";
+                    receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
+                    for(let i = 0; i < 1; i++) {
+                        const search = lower.charAt(0).toUpperCase() + lower.slice(1);
+                        let currentName = cities[i];
+                        if (currentName.includes(search)) {
+                            console.log(currentName)
+                            cityName.innerHTML = currentName;
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < teamPass.length; i++) {
+                let currentTeam = teamArrPass[i];
+                if (lower === currentTeam) {
+                    console.log('Index: ' + i)
+                    teamArrPass.indexOf(lower);
+                    receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
+                    touchdownsName.innerHTML = touchdownArrPass[i] + " touchdowns!";
+                    receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
+                    for(let i = 0; i < 1; i++) {
+                        const search = lower.charAt(0).toUpperCase() + lower.slice(1);
+                        let currentName = cities[i];
+                        if (currentName.includes(search)) {
+                            console.log(currentName)
+                            cityName.innerHTML = currentName;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     for (let i = 0; i < 32; i++) {
@@ -110,9 +128,14 @@
             .then(response => {
 
                 let teamName = response._embedded.teamRushingStatsList[i].name
+                let lowerTeam = teamName.toLowerCase();
                 let rushYds = response._embedded.teamRushingStatsList[i].yards
                 let touchdowns = response._embedded.teamRushingStatsList[i].touchdowns
-                console.log(teamName + " " + rushYds + " " + touchdowns)
+
+                teamNameArrRush.push(teamName);
+                teamArrRush.push(lowerTeam);
+                rushYdsArrRush.push(rushYds);
+                touchdownsArrRush.push(touchdowns);
 
 
 
