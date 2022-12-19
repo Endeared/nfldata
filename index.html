@@ -88,7 +88,7 @@
                     console.log('Index: ' + i)
                     teamArrPass.indexOf(lower);
                     receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
-                    touchdownsName.innerHTML = touchdownArrPass[i] + " touchdowns!";
+                    touchdownsName.innerHTML = touchdownArrPass[i] + " receiving touchdowns!";
                     receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
                     for(let i = 0; i < 1; i++) {
                         const search = lower.charAt(0).toUpperCase() + lower.slice(1);
@@ -100,22 +100,13 @@
                     }
                 }
             }
-            for (let i = 0; i < teamPass.length; i++) {
-                let currentTeam = teamArrPass[i];
+            for (let i = 0; i < teamArrRush.length; i++) {
+                let currentTeam = teamArrRush[i];
                 if (lower === currentTeam) {
                     console.log('Index: ' + i)
-                    teamArrPass.indexOf(lower);
-                    receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
-                    touchdownsName.innerHTML = touchdownArrPass[i] + " touchdowns!";
-                    receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
-                    for(let i = 0; i < 1; i++) {
-                        const search = lower.charAt(0).toUpperCase() + lower.slice(1);
-                        let currentName = cities[i];
-                        if (currentName.includes(search)) {
-                            console.log(currentName)
-                            cityName.innerHTML = currentName;
-                        }
-                    }
+                    teamArrRush.indexOf(lower);
+                    rushYdsName.innerHTML = rushYdsArrRush[i] + " rushing yards!"
+                    rushTdsName.innerHTML = touchdownsArrRush[i] + " rushing touchdowns!"
                 }
             }
         }
