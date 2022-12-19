@@ -25,16 +25,19 @@ body {
     align-items: center;
 }
 
-.statsCont .row1, .statsCont .row2 {
+.statsCont .row1,
+.statsCont .row2 {
     margin-bottom: 1vh;
 }
 
 
-.row1, .row2 {
+.row1,
+.row2 {
     display: flex;
 }
 
-.row1 div, .row2 div {
+.row1 div,
+.row2 div {
     margin-left: 10px;
     margin-right: 10px;
 }
