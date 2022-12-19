@@ -10,7 +10,7 @@
 
 <body>
 
-    <input id="search" type="text" placeholder="Search">
+    <input id="search" type="text" placeholder="Search by TEAM NAME">
 
     <div id="cityName"></div>
     <div id="teamName"></div>
@@ -19,33 +19,41 @@
     <div id="receivingYards"></div>
     <div id="rushYds"></div>
     <div id="rushTds"></div>
+    <div id="winLossPct"></div>
 
 </body>
 
 <script>
 
-    // let cityName = document.getElementById('cityName')
-    // let teamName = document.getElementById('teamName')
-    // let receptionsName = document.getElementById('receptions')
-    // let touchdownsName = document.getElementById('touchdowns')
-    // let receivingYdsName = document.getElementById('receivingYards')
+    let cityName = document.getElementById('cityName')
+    let teamName = document.getElementById('teamName')
+    let receptionsName = document.getElementById('receptions')
+    let touchdownsName = document.getElementById('touchdowns')
+    let receivingYdsName = document.getElementById('receivingYards')
 
     let rushYdsName = document.getElementById('rushYds')
     let rushTdsName = document.getElementById('rushTds')
 
-    // let teamNameArrPass = [];
-    // let teamArrPass = [];
-    // let receptionArrPass = [];
-    // let touchdownArrPass = [];
-    // let receivingYdsArrPass = [];
-    // let cities = ['Cincinnati Bengals']
+    let winLossPct = document.getElementById('winLossPct')
+
+    let teamNameArrPass = [];
+    let teamArrPass = [];
+    let receptionArrPass = [];
+    let touchdownArrPass = [];
+    let receivingYdsArrPass = [];
+    let cities = ['Arizona Cardinals', 'Atlanta Falcons', 'Baltimore Ravens', 'Buffalo Bills', 'Carolina Panthers', 'Chicago Bears', 'Cincinnati Bengals', 'Cleveland Browns', 'Dallas Cowboys', 'Denver Broncos', 'Detroit Lions', 'Green Bay Packers', 'Houston Texans', 'Indianapolis Colts', 'Jacksonville Jaguars', 'Kansas City Chiefs', 'Las Vegas Raiders', 'Los Angeles Chargers', 'Los Angeles Rams', 'Miami Dolphins', 'Minnesota Vikings', 'New England Patriots', 'New Orleans Saints', 'New York Giants', 'New York Jets', 'Philadelphia Eagles', 'Pittsburgh Steelers', 'San Francisco 49ers', 'Seattle Seahawks', 'Tampa Bay Buccaneers', 'Tennessee Titans', 'Washington Commanders']
     let teamArrRush = [];
     let teamNameArrRush = [];
     let rushYdsArrRush = [];
     let touchdownsArrRush = [];
+    let teamArrWins = [];
+    let teamNameArrWins = [];
+    let winArr = [];
+    let lossArr = [];
+    let pctArr = [];
 
-    // let searchBar = document.getElementById('search');
-    // searchBar.setAttribute("onkeydown", "check(this)");
+    let searchBar = document.getElementById('search');
+    searchBar.setAttribute("onkeydown", "check(this)");
 
 
     const options = {
@@ -56,27 +64,72 @@
         }
     };
 
-    // for (let i = 0; i < 32; i++) {
-    //     fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
-    //         .then(response => response.json())
-    //         .then(response => {
+    for (let i = 0; i < 32; i++) {
+        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
+            .then(response => response.json())
+            .then(response => {
 
-    //             let teamName = response._embedded.teamReceivingStatsList[i].name
-    //             let lowerTeam = teamName.toLowerCase();
-    //             let receptions = response._embedded.teamReceivingStatsList[i].receives
-    //             let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
-    //             let receivingYards = response._embedded.teamReceivingStatsList[i].yards
+                let teamName = response._embedded.teamReceivingStatsList[i].name
+                let lowerTeam = teamName.toLowerCase();
+                let receptions = response._embedded.teamReceivingStatsList[i].receives
+                let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
+                let receivingYards = response._embedded.teamReceivingStatsList[i].yards
 
-    //             teamNameArrPass.push(teamName)
-    //             teamArrPass.push(lowerTeam)
-    //             receptionArrPass.push(receptions)
-    //             touchdownArrPass.push(touchdowns)
-    //             receivingYdsArrPass.push(receivingYards)
+                teamNameArrPass.push(teamName)
+                teamArrPass.push(lowerTeam)
+                receptionArrPass.push(receptions)
+                touchdownArrPass.push(touchdowns)
+                receivingYdsArrPass.push(receivingYards)
 
 
-    //         })
-    //         .catch(err => console.error(err));
-    // }
+            })
+            .catch(err => console.error(err));
+    }
+
+    for (let i = 0; i < 32; i++) {
+        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/2022', options)
+            .then(response => response.json())
+            .then(response => {
+
+                let teamName = response._embedded.teamRushingStatsList[i].name
+                let lowerTeam = teamName.toLowerCase();
+                let rushYds = response._embedded.teamRushingStatsList[i].yards
+                let touchdowns = response._embedded.teamRushingStatsList[i].touchdowns
+
+                teamNameArrRush.push(teamName);
+                teamArrRush.push(lowerTeam);
+                rushYdsArrRush.push(rushYds);
+                touchdownsArrRush.push(touchdowns);
+
+
+
+            })
+            .catch(err => console.error(err));
+    }
+
+    for (let i = 0; i < 32; i++) {
+        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/win-stats/2022', options)
+            .then(response => response.json())
+            .then(response => {
+
+                console.log(response)
+                let teamName = response._embedded.teamWinStatsList[i].name
+                let lowerTeam = teamName.toLowerCase();
+                let wins = response._embedded.teamWinStatsList[i].wins
+                let losses = response._embedded.teamWinStatsList[i].losses
+                let pct = response._embedded.teamWinStatsList[i].winRatePercentage
+
+                teamNameArrWins.push(teamName);
+                teamArrWins.push(lowerTeam);
+                winArr.push(wins);
+                lossArr.push(losses);
+                pctArr.push(pct);
+
+
+
+            })
+            .catch(err => console.error(err));
+    }
 
     function check(ele) {
         if (event.key === 'Enter') {
@@ -90,7 +143,7 @@
                     receptionsName.innerHTML = receptionArrPass[i] + " receptions!";
                     touchdownsName.innerHTML = touchdownArrPass[i] + " receiving touchdowns!";
                     receivingYdsName.innerHTML = receivingYdsArrPass[i] + " receiving yards!";
-                    for(let i = 0; i < 1; i++) {
+                    for(let i = 0; i < 32; i++) {
                         const search = lower.charAt(0).toUpperCase() + lower.slice(1);
                         let currentName = cities[i];
                         if (currentName.includes(search)) {
@@ -109,29 +162,17 @@
                     rushTdsName.innerHTML = touchdownsArrRush[i] + " rushing touchdowns!"
                 }
             }
+            for (let i = 0; i < teamArrWins.length; i++) {
+                let currentTeam = teamArrWins[i];
+                if (lower === currentTeam) {
+                    console.log('Index: ' + i)
+                    teamArrWins.indexOf(lower);
+
+                    rushYdsName.innerHTML = rushYdsArrRush[i] + " rushing yards!"
+                    rushTdsName.innerHTML = touchdownsArrRush[i] + " rushing touchdowns!"
+                }
+            }
         }
-    }
-
-
-    for (let i = 0; i < 32; i++) {
-        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/1999', options)
-            .then(response => response.json())
-            .then(response => {
-
-                let teamName = response._embedded.teamRushingStatsList[i].name
-                let lowerTeam = teamName.toLowerCase();
-                let rushYds = response._embedded.teamRushingStatsList[i].yards
-                let touchdowns = response._embedded.teamRushingStatsList[i].touchdowns
-
-                teamNameArrRush.push(teamName);
-                teamArrRush.push(lowerTeam);
-                rushYdsArrRush.push(rushYds);
-                touchdownsArrRush.push(touchdowns);
-
-
-
-            })
-            .catch(err => console.error(err));
     }
 
 
