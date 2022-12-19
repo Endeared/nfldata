@@ -13,7 +13,6 @@
     <input id="search" type="text" placeholder="Search by TEAM NAME">
 
     <div id="cityName"></div>
-    <div id="teamName"></div>
     <div id="receptions"></div>
     <div id="touchdowns"></div>
     <div id="receivingYards"></div>
@@ -164,11 +163,12 @@
             }
             for (let i = 0; i < teamArrWins.length; i++) {
                 let currentTeam = teamArrWins[i];
-                if (lower === currentTeam) {
+                console.log(currentTeam)
+                if (currentTeam.includes(lower)) {
                     console.log('Index: ' + i)
                     teamArrWins.indexOf(lower);
 
-                    winLossPct.innerHTML = winArr[i] + " - " + lossArr[i] + " (" + pctArr[i] + ")";
+                    winLossPct.innerHTML = winArr[i] + " - " + lossArr[i] + " [" + pctArr[i] + "]";
                 }
             }
         }
