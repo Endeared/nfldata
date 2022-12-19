@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
     <input id="search" type="text" placeholder="Search">
@@ -19,43 +21,78 @@
 
 <script>
 
-let teamArr = [];
-let receptionArr = [];
-let touchdownArr = [];
-let receivingYdsArr = [];
+    let teamNameArr = [];
+    let teamArr = [];
+    let receptionArr = [];
+    let touchdownArr = [];
+    let receivingYdsArr = [];
+    let cities = ['Cincinnati Bengals']
 
-let searchBar = document.getElementById('search');
-searchBar.setAttribute("onkeydown", "check(this)");
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '15ec37c6e1msh41118b97b21f529p1dd1d0jsn409e2039107c',
-		'X-RapidAPI-Host': 'nfl-team-stats.p.rapidapi.com'
-	}
-};
+    let searchBar = document.getElementById('search');
+    searchBar.setAttribute("onkeydown", "check(this)");
 
 
-for(let i = 0; i < 32; i++) {
-fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
-    .then(response => response.json())
-    .then(response => {
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-        var teamName = response._embedded.teamReceivingStatsList[i].name
-        var receptions = response._embedded.teamReceivingStatsList[i].receives
-        var touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
-        var receivingYards = response._embedded.teamReceivingStatsList[i].yards
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '15ec37c6e1msh41118b97b21f529p1dd1d0jsn409e2039107c',
+            'X-RapidAPI-Host': 'nfl-team-stats.p.rapidapi.com'
+        }
+    };
 
-        teamArr.push(teamName)
-        receptionArr.push(receptions)
-        touchdownArr.push(touchdowns)
-        receivingYdsArr.push(receivingYards)
+    for (let i = 0; i < 32; i++) {
+        fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/offense/2022', options)
+            .then(response => response.json())
+            .then(response => {
 
-        console.log(teamName)
+                let teamName = response._embedded.teamReceivingStatsList[i].name
+                let lowerTeam = teamName.toLowerCase();
+                let receptions = response._embedded.teamReceivingStatsList[i].receives
+                let touchdowns = response._embedded.teamReceivingStatsList[i].touchdowns
+                let receivingYards = response._embedded.teamReceivingStatsList[i].yards
 
-    })
-    .catch(err => console.error(err));
-}
+                // console.log(teamName)
+                teamNameArr.push(teamName)
+                teamArr.push(lowerTeam)
+                receptionArr.push(receptions)
+                touchdownArr.push(touchdowns)
+                receivingYdsArr.push(receivingYards)
+
+
+            })
+            .catch(err => console.error(err));
+    }
+
+    function check(ele) {
+        if (event.key === 'Enter') {
+            let lower = ele.value.toLowerCase();
+            console.log(teamArr)
+            for (let i = 0; i < teamArr.length; i++) {
+                let currentTeam = teamArr[i];
+                if (lower === currentTeam) {
+                    console.log('Index: ' + i)
+                    teamArr.indexOf(lower);
+                    console.log(teamNameArr[i])
+                    console.log(receptionArr[i])
+                    console.log(touchdownArr[i])
+                    console.log(receivingYdsArr[i])
+                    for(let i = 0; i < 1; i++) {
+                        const search = lower.charAt(0).toUpperCase() + lower.slice(1);
+                        let currentName = cities[i];
+                        if (currentName.includes(search)) {
+                            console.log(currentName)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 
 // fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/rushing-stats/defense/2022', options)
 // 	.then(response => response.json())
@@ -72,9 +109,6 @@ fetch('https://nfl-team-stats.p.rapidapi.com/v1/nfl-stats/teams/receiving-stats/
 //         response._embedded.teamReceivingStatsList[i].yards))
 //         .catch(err => console.error(err));
 // }
-
-
-console.log(teamName)
 
 
 </script>
